@@ -1,0 +1,44 @@
+:root {
+    /* --- Bảng màu hiện đại --- */
+    --primary: #6366f1;       /* Indigo 500 */
+    --primary-dark: #4f46e5;  /* Indigo 600 */
+    --primary-light: #818cf8; /* Indigo 400 */
+    
+    --success: #10b981;       /* Emerald 500 */
+    --warning: #f59e0b;       /* Amber 500 */
+    --danger: #ef4444;        /* Red 500 */
+    --info: #3b82f6;          /* Blue 500 */
+
+    /* --- Nền & Kính mờ --- */
+    --bg-body: #f8fafc;       /* Slate 50 */
+    --bg-sidebar: rgba(255, 255, 255, 0.85);
+    --bg-card: rgba(255, 255, 255, 0.7);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.5);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+    
+    /* --- Text --- */
+    --text-main: #1e293b;     /* Slate 800 */
+    --text-muted: #64748b;    /* Slate 500 */
+    --text-light: #94a3b8;    /* Slate 400 */
+
+    /* --- Kích thước & Bo góc --- */
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    
+    /* --- Font chữ --- */
+    --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+    
+    /* --- Transition --- */
+    --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+/* Dark Mode (Chuẩn bị sẵn) */
+[data-theme="dark"] {
+    --bg-body: #0f172a;
+    --bg-sidebar: rgba(30, 41, 59, 0.85);
+    --bg-card: rgba(30, 41, 59, 0.7);
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+}

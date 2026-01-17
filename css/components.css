@@ -1,0 +1,45 @@
+/* Upload Zone */
+.upload-area {
+    border: 2px dashed var(--primary-light);
+    border-radius: var(--radius-lg);
+    padding: 3rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    background: rgba(255,255,255,0.4);
+    cursor: pointer;
+}
+
+.upload-area:hover, .upload-area.drag-over {
+    background: rgba(99, 102, 241, 0.1);
+    border-color: var(--primary);
+    transform: scale(1.01);
+}
+
+.file-icon-large {
+    font-size: 4rem;
+    color: var(--primary-light);
+    margin-bottom: 1rem;
+}
+
+/* File Preview Item */
+.file-preview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    margin-top: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* Report Status Badge */
+.badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+.badge.approved { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+.badge.rejected { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+.badge.pending { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
