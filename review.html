@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiểm duyệt Tài liệu - EduReview AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <div class="app-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <i class="fa-solid fa-graduation-cap fa-xl" style="color: var(--primary);"></i>
+                <span>EduReview<span style="color: var(--primary);">AI</span></span>
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item"><a href="index.html"><i class="fa-solid fa-chart-pie"></i> Tổng quan</a></li>
+                <li class="nav-item"><a href="review.html" class="active"><i class="fa-solid fa-file-shield"></i> Kiểm duyệt</a></li>
+                <li class="nav-item"><a href="history.html"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử</a></li>
+                <li class="nav-item"><a href="settings.html"><i class="fa-solid fa-gear"></i> Cài đặt</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header animate-fade-up">
+                <h1 class="page-title">Kiểm duyệt Tài liệu</h1>
+            </header>
+
+            <div class="glass-card animate-fade-up" style="margin-bottom: 2rem;">
+                <!-- Upload Zone -->
+                <div id="drop-zone" class="upload-area">
+                    <i class="fa-solid fa-cloud-arrow-up file-icon-large"></i>
+                    <h3>Kéo thả tài liệu vào đây</h3>
+                    <p style="color: var(--text-muted); margin: 10px 0;">Hỗ trợ: PDF, Word, Excel, PowerPoint</p>
+                    <input type="file" id="file-input" hidden accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx">
+                    <button class="btn-primary" onclick="document.getElementById('file-input').click()">
+                        Chọn File
+                    </button>
+                </div>
+
+                <!-- File Info & Action (Hidden by default) -->
+                <div id="file-preview-container" style="display: none; margin-top: 1.5rem;">
+                    <div class="file-preview">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <i class="fa-solid fa-file-word fa-2x" style="color: var(--primary);"></i>
+                            <div>
+                                <h4 id="file-name" style="margin: 0;">tailieu.docx</h4>
+                                <span id="file-size" style="font-size: 0.8rem; color: var(--text-muted);">2.5 MB</span>
+                            </div>
+                        </div>
+                        <button id="remove-file-btn" style="background: none; border: none; color: var(--danger); cursor: pointer;">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+
+                    <div style="margin-top: 1.5rem; text-align: right;">
+                        <button id="start-review-btn" class="btn-primary ai-thinking">
+                            <i class="fa-solid fa-robot"></i> Bắt đầu Kiểm duyệt với AI
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading State (Hidden by default) -->
+            <div id="loading-state" class="glass-card" style="display: none; text-align: center; padding: 3rem;">
+                <div class="spinner" style="border-color: var(--primary); border-top-color: transparent; width: 50px; height: 50px; margin: 0 auto;"></div>
+                <h3 style="margin-top: 1.5rem;">Claude AI đang phân tích...</h3>
+                <p style="color: var(--text-muted);">Đang chấm điểm nội dung và thiết kế</p>
+            </div>
+
+            <!-- Result Area (Placeholder for Step 4) -->
+            <div id="result-area"></div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="libs/pdf-lib.min.js"></script>
+    <script src="libs/mammoth.min.js"></script>
+    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/file-handler.js"></script>
+</body>
+</html>

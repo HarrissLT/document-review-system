@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - EduReview AI</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS System -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <style>
+        /* CSS riêng cho Dashboard */
+        .stat-value { font-size: 2.5rem; font-weight: 700; margin: 10px 0; color: var(--text-main); }
+        .stat-label { color: var(--text-muted); font-size: 0.9rem; font-weight: 500; }
+        .icon-shape { 
+            width: 48px; height: 48px; 
+            border-radius: 12px; 
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.25rem;
+        }
+        .recent-item {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .recent-item:last-child { border-bottom: none; }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <i class="fa-solid fa-graduation-cap fa-xl" style="color: var(--primary);"></i>
+                <span>EduReview<span style="color: var(--primary);">AI</span></span>
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item"><a href="index.html" class="active"><i class="fa-solid fa-chart-pie"></i> Tổng quan</a></li>
+                <li class="nav-item"><a href="review.html"><i class="fa-solid fa-file-shield"></i> Kiểm duyệt</a></li>
+                <li class="nav-item"><a href="history.html"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử</a></li>
+                <li class="nav-item"><a href="settings.html"><i class="fa-solid fa-gear"></i> Cài đặt</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header animate-fade-up">
+                <div>
+                    <h1 class="page-title">Tổng quan hệ thống</h1>
+                    <p style="color: var(--text-muted); margin-top: 5px;">Chào mừng trở lại, Admin 👋</p>
+                </div>
+                <button class="btn-primary" onclick="window.location.href='review.html'">
+                    <i class="fa-solid fa-plus"></i> Kiểm duyệt mới
+                </button>
+            </header>
+
+            <!-- Stats Grid -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                <!-- Card 1: Tổng số -->
+                <div class="glass-card animate-fade-up" style="animation-delay: 0.1s;">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div>
+                            <div class="stat-label">Tổng tài liệu</div>
+                            <div class="stat-value" id="total-docs">0</div>
+                        </div>
+                        <div class="icon-shape" style="background: rgba(99, 102, 241, 0.1); color: var(--primary);">
+                            <i class="fa-solid fa-file-lines"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card 2: Đạt yêu cầu -->
+                <div class="glass-card animate-fade-up" style="animation-delay: 0.2s;">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div>
+                            <div class="stat-label">Đạt yêu cầu</div>
+                            <div class="stat-value" id="approved-docs" style="color: var(--success);">0</div>
+                        </div>
+                        <div class="icon-shape" style="background: rgba(16, 185, 129, 0.1); color: var(--success);">
+                            <i class="fa-solid fa-check-circle"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Cần chỉnh sửa -->
+                <div class="glass-card animate-fade-up" style="animation-delay: 0.3s;">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div>
+                            <div class="stat-label">Cần chỉnh sửa</div>
+                            <div class="stat-value" id="rejected-docs" style="color: var(--danger);">0</div>
+                        </div>
+                        <div class="icon-shape" style="background: rgba(239, 68, 68, 0.1); color: var(--danger);">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts & Recent Activity -->
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem;">
+                
+                <!-- Chart Section -->
+                <div class="glass-card animate-fade-up" style="animation-delay: 0.4s; min-height: 400px;">
+                    <h3 style="margin-bottom: 1.5rem;">Thống kê Chất lượng</h3>
+                    <canvas id="qualityChart"></canvas>
+                </div>
+
+                <!-- Recent Activity Section -->
+                <div class="glass-card animate-fade-up" style="animation-delay: 0.5s;">
+                    <h3 style="margin-bottom: 1.5rem;">Hoạt động gần đây</h3>
+                    <div id="recent-list">
+                        <!-- Javascript sẽ điền dữ liệu vào đây -->
+                        <p style="color: var(--text-muted); text-align: center; margin-top: 2rem;">Chưa có dữ liệu</p>
+                    </div>
+                    <div style="margin-top: 1.5rem; text-align: center;">
+                        <a href="history.html" style="color: var(--primary); text-decoration: none; font-weight: 500; font-size: 0.9rem;">
+                            Xem tất cả <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- API Warning Modal (Hiện nếu chưa nhập Key) -->
+    <div id="api-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 1000; align-items: center; justify-content: center;">
+        <div class="glass-card animate-fade-up" style="background: white; max-width: 450px; padding: 2.5rem; text-align: center; border-top: 5px solid var(--warning); box-shadow: 0 20px 50px rgba(0,0,0,0.2);">
+            <div style="font-size: 3.5rem; color: var(--warning); margin-bottom: 1rem;">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h2 style="margin-bottom: 1rem; color: var(--text-main);">Yêu cầu Cấu hình</h2>
+            <p style="color: var(--text-muted); margin-bottom: 2rem; line-height: 1.6;">
+                Hệ thống chưa tìm thấy <b>API Key</b>. Để AI hoạt động, bạn cần nhập Key (Claude, Gemini hoặc OpenAI) trong phần cài đặt.
+            </p>
+            <div style="display: flex; gap: 15px; justify-content: center;">
+                <button class="btn-primary" onclick="window.location.href='settings.html'">
+                    <i class="fa-solid fa-gear"></i> Cài đặt ngay
+                </button>
+                <button style="padding: 10px 20px; border: 1px solid #e5e7eb; background: white; border-radius: 8px; cursor: pointer; color: var(--text-muted); font-weight: 500;" onclick="document.getElementById('api-modal').style.display='none'">
+                    Để sau
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        // --- LOGIC DASHBOARD ---
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDashboardData();
+            checkApiKey();
+        });
+
+        function checkApiKey() {
+            const apiKey = localStorage.getItem('ai_api_key');
+            if (!apiKey) {
+                // Delay 1 chút cho mượt rồi mới hiện modal
+                setTimeout(() => {
+                    document.getElementById('api-modal').style.display = 'flex';
+                }, 1000);
+            }
+        }
+
+        function loadDashboardData() {
+            // 1. Lấy dữ liệu từ LocalStorage
+            const history = JSON.parse(localStorage.getItem('review_history') || '[]');
+            
+            // 2. Tính toán thống kê
+            const total = history.length;
+            const approved = history.filter(item => item.status === 'approved').length;
+            const rejected = total - approved;
+
+            // 3. Hiển thị lên số liệu (Animation đếm số)
+            animateValue("total-docs", 0, total, 1000);
+            animateValue("approved-docs", 0, approved, 1000);
+            animateValue("rejected-docs", 0, rejected, 1000);
+
+            // 4. Vẽ biểu đồ
+            renderChart(approved, rejected);
+
+            // 5. Hiển thị danh sách gần đây (Lấy 5 cái mới nhất)
+            renderRecentList(history.slice(0, 5));
+        }
+
+        function renderChart(approved, rejected) {
+            const ctx = document.getElementById('qualityChart').getContext('2d');
+            
+            // Nếu chưa có dữ liệu thì hiển thị giả lập cho đẹp
+            if (approved === 0 && rejected === 0) {
+                approved = 1; rejected = 0; // Placeholder để chart không bị lỗi
+            }
+
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Đạt yêu cầu', 'Cần chỉnh sửa'],
+                    datasets: [{
+                        data: [approved, rejected],
+                        backgroundColor: [
+                            'rgba(16, 185, 129, 0.8)', // Green
+                            'rgba(239, 68, 68, 0.8)'   // Red
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    },
+                    cutout: '70%' // Làm biểu đồ rỗng ruột
+                }
+            });
+        }
+
+        function renderRecentList(items) {
+            const container = document.getElementById('recent-list');
+            if (items.length === 0) return;
+
+            container.innerHTML = items.map(item => `
+                <div class="recent-item">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="width: 35px; height: 35px; background: #f3f4f6; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fa-solid fa-file-word" style="color: var(--primary);"></i>
+                        </div>
+                        <div>
+                            <div style="font-weight: 500; font-size: 0.9rem;">${item.fileName}</div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted);">${item.date}</div>
+                        </div>
+                    </div>
+                    <span class="badge ${item.status === 'approved' ? 'approved' : 'rejected'}" style="font-size: 0.75rem;">
+                        ${item.status === 'approved' ? 'Đạt' : 'Sửa'}
+                    </span>
+                </div>
+            `).join('');
+        }
+
+        // Hàm hiệu ứng chạy số
+        function animateValue(id, start, end, duration) {
+            if (start === end) return;
+            const range = end - start;
+            let current = start;
+            const increment = end > start ? 1 : -1;
+            const stepTime = Math.abs(Math.floor(duration / range));
+            const obj = document.getElementById(id);
+            const timer = setInterval(function() {
+                current += increment;
+                obj.innerHTML = current;
+                if (current == end) {
+                    clearInterval(timer);
+                }
+            }, stepTime);
+        }
+    </script>
+</body>
+</html>

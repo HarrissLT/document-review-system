@@ -1,0 +1,16 @@
+{
+  "name": "document-review-system",
+  "version": "1.0.0",
+  "description": "Hệ thống kiểm duyệt tài liệu thông minh tích hợp Claude AI",
+  "scripts": {
+    "start": "serve"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.18.0",
+    "@supabase/supabase-js": "^2.39.0",
+    "formidable": "^3.5.1"
+  },
+  "devDependencies": {
+    "serve": "^14.2.1"
+  }
+}

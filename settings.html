@@ -1,0 +1,89 @@
+<!-- settings.html -->
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cài đặt - EduReview AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <div class="app-wrapper">
+        <!-- Sidebar giữ nguyên như cũ -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <i class="fa-solid fa-graduation-cap fa-xl" style="color: var(--primary);"></i>
+                <span>EduReview<span style="color: var(--primary);">AI</span></span>
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item"><a href="index.html"><i class="fa-solid fa-chart-pie"></i> Tổng quan</a></li>
+                <li class="nav-item"><a href="review.html"><i class="fa-solid fa-file-shield"></i> Kiểm duyệt</a></li>
+                <li class="nav-item"><a href="history.html"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử</a></li>
+                <li class="nav-item"><a href="settings.html" class="active"><i class="fa-solid fa-gear"></i> Cài đặt</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header animate-fade-up">
+                <h1 class="page-title">Cài đặt Hệ thống</h1>
+            </header>
+
+            <!-- API Configuration Section -->
+            <div class="glass-card animate-fade-up" style="max-width: 800px;">
+                <h2 style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-key" style="color: var(--warning);"></i> Cấu hình AI API
+                </h2>
+                
+                <div style="background: rgba(245, 158, 11, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid var(--warning);">
+                    <p style="font-size: 0.9rem; color: #92400e;">
+                        <i class="fa-solid fa-circle-info"></i> 
+                        Bạn cần nhập API Key của riêng mình để hệ thống hoạt động. Key sẽ được lưu an toàn trên trình duyệt của bạn.
+                    </p>
+                </div>
+
+                <form id="api-settings-form">
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600;">Chọn Nhà cung cấp AI</label>
+                        <select id="ai-provider" style="width: 100%; padding: 12px; border-radius: var(--radius-sm); border: 1px solid #ccc; background: white;">
+                            <option value="claude">Anthropic Claude 3.5 Sonnet (Khuyên dùng)</option>
+                            <option value="gemini">Google Gemini Pro</option>
+                            <option value="openai">OpenAI GPT-4o</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600;">Nhập API Key</label>
+                        <div style="position: relative;">
+                            <input type="password" id="api-key-input" placeholder="sk-..." style="width: 100%; padding: 12px; border-radius: var(--radius-sm); border: 1px solid #ccc;">
+                            <button type="button" id="toggle-key-visibility" style="position: absolute; right: 10px; top: 12px; border: none; background: none; cursor: pointer;">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <button type="submit" class="btn-primary">
+                            <i class="fa-solid fa-floppy-disk"></i> Lưu & Kiểm tra
+                        </button>
+                        <span id="api-status-msg" style="font-weight: 500; margin-left: 10px;"></span>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Profile Settings (Placeholder) -->
+            <div class="glass-card animate-fade-up" style="max-width: 800px; margin-top: 2rem; animation-delay: 0.1s;">
+                <h2 style="margin-bottom: 1rem;">Thông tin Báo cáo</h2>
+                <p style="color: var(--text-muted);">Các thông tin này sẽ hiện trong file PDF.</p>
+                <!-- Các input khác... -->
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="js/settings-manager.js"></script>
+</body>
+</html>

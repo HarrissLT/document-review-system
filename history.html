@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch sử Kiểm duyệt - EduReview AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        /* CSS riêng cho bảng */
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th { text-align: left; padding: 1rem; color: var(--text-muted); font-weight: 600; border-bottom: 1px solid #eee; }
+        td { padding: 1rem; border-bottom: 1px solid #eee; vertical-align: middle; }
+        tr:last-child td { border-bottom: none; }
+        .btn-icon { background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 5px; transition: 0.2s; }
+        .btn-icon:hover { color: var(--primary); }
+        .delete-btn:hover { color: var(--danger); }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+        <aside class="sidebar">
+            <div class="logo-area">
+                <i class="fa-solid fa-graduation-cap fa-xl" style="color: var(--primary);"></i>
+                <span>EduReview<span style="color: var(--primary);">AI</span></span>
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item"><a href="index.html"><i class="fa-solid fa-chart-pie"></i> Tổng quan</a></li>
+                <li class="nav-item"><a href="review.html"><i class="fa-solid fa-file-shield"></i> Kiểm duyệt</a></li>
+                <li class="nav-item"><a href="history.html" class="active"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử</a></li>
+                <li class="nav-item"><a href="settings.html"><i class="fa-solid fa-gear"></i> Cài đặt</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header animate-fade-up">
+                <h1 class="page-title">Lịch sử Kiểm duyệt</h1>
+                <button class="btn-primary" onclick="localStorage.removeItem('review_history'); window.loadHistoryTable();" style="background: var(--danger);">
+                    <i class="fa-solid fa-trash-can"></i> Xóa tất cả
+                </button>
+            </header>
+
+            <div class="glass-card animate-fade-up">
+                <table>
+                    <thead>
+                        <tr>
+                            <th width="30%">Tên tài liệu</th>
+                            <th width="15%">Điểm TB</th>
+                            <th width="15%">Trạng thái</th>
+                            <th width="30%">Nhận xét chung</th>
+                            <th width="10%">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-table-body">
+                        <!-- Dữ liệu sẽ được JS thêm vào đây -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/history-manager.js"></script>
+</body>
+</html>
