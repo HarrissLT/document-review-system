@@ -24,9 +24,9 @@ if (toggleBtn) {
     });
 }
 
-// 3. Xử lý Lưu (Cho phép Lưu cưỡng ép nếu Check lỗi)
+// 3. Xử lý Lưu (CHỈ KIỂM TRA ĐỊNH DẠNG - KHÔNG GỌI SERVER)
 if (form) {
-    form.addEventListener('submit', async (e) => {
+    form.addEventListener('submit', (e) => {
         e.preventDefault();
         const provider = providerSelect.value;
         const key = keyInput.value.trim();
@@ -36,65 +36,49 @@ if (form) {
             return;
         }
 
-        // Kiểm tra sơ bộ định dạng (Client side check)
-        if (key.length < 10) {
-             showStatus('Key quá ngắn, vui lòng kiểm tra lại.', 'red');
-             return;
+        // --- KIỂM TRA ĐỊNH DẠNG CƠ BẢN ---
+        let isValidFormat = true;
+        let warningMsg = "";
+
+        if (provider === 'claude') {
+            if (!key.startsWith('sk-ant-')) {
+                isValidFormat = false;
+                warningMsg = "Key Claude thường bắt đầu bằng 'sk-ant-'";
+            }
+        } 
+        else if (provider === 'gemini') {
+            if (!key.startsWith('AIza')) {
+                isValidFormat = false;
+                warningMsg = "Key Gemini thường bắt đầu bằng 'AIza'";
+            }
+        }
+        else if (provider === 'openai') {
+            if (!key.startsWith('sk-')) {
+                isValidFormat = false;
+                warningMsg = "Key OpenAI thường bắt đầu bằng 'sk-'";
+            }
         }
 
-        showStatus('<i class="fa-solid fa-spinner fa-spin"></i> Đang xử lý...', 'orange');
-
-        try {
-            // Thử gọi API kiểm tra (nhưng không bắt buộc phải thành công 100%)
-            const response = await fetch('/api/test-key', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ provider, key })
-            });
-
-            // Nếu chạy Local (404/405) hoặc Server lỗi (500) -> Vẫn cho lưu
-            if (!response.ok) {
-                console.warn("Server check failed, forcing save.");
-                saveKey(provider, key, true); // True = Lưu có cảnh báo nhẹ
+        // Nếu định dạng sai nhưng người dùng vẫn muốn lưu -> Cho phép nhưng cảnh báo
+        if (!isValidFormat) {
+            if(!confirm(`Cảnh báo: ${warningMsg}. Bạn có chắc chắn đây là Key đúng không?`)) {
                 return;
             }
-
-            const data = await response.json();
-            
-            if (data.valid) {
-                saveKey(provider, key, false); // False = Lưu thành công hoàn toàn
-            } else {
-                // Nếu Server trả về rõ ràng là Key sai -> Vẫn cho lưu nhưng cảnh báo
-                console.warn("API báo key sai: " + data.error);
-                if(confirm("Hệ thống báo Key này có thể không hoạt động. Bạn có chắc chắn muốn lưu không?")) {
-                    saveKey(provider, key, true);
-                } else {
-                    showStatus(`<i class="fa-solid fa-circle-xmark"></i> ${data.error}`, 'red');
-                }
-            }
-
-        } catch (error) {
-            // Lỗi mạng hoặc lỗi khác -> Vẫn cho lưu
-            console.error("Network error, forcing save:", error);
-            saveKey(provider, key, true);
         }
-    });
-}
 
-function saveKey(provider, key, isForced) {
-    localStorage.setItem('ai_provider', provider);
-    localStorage.setItem('ai_api_key', key);
-    
-    if (isForced) {
-        showStatus('<i class="fa-solid fa-check-circle"></i> Đã lưu (Bỏ qua kiểm tra lỗi).', 'orange');
-    } else {
-        showStatus('<i class="fa-solid fa-check-circle"></i> Key hợp lệ! Đã lưu.', 'green');
-    }
-    
-    // Ẩn thông báo sau 2s
-    setTimeout(() => {
-        statusMsg.textContent = '';
-    }, 2000);
+        // --- LƯU TRỰC TIẾP VÀO LOCALSTORAGE ---
+        localStorage.setItem('ai_provider', provider);
+        localStorage.setItem('ai_api_key', key);
+
+        showStatus('<i class="fa-solid fa-check-circle"></i> Đã lưu cấu hình!', 'green');
+
+        // Hiệu ứng visual
+        keyInput.style.borderColor = 'var(--success)';
+        setTimeout(() => {
+            statusMsg.textContent = '';
+            keyInput.style.borderColor = '#ccc';
+        }, 2000);
+    });
 }
 
 function showStatus(msg, color) {
